@@ -15,7 +15,7 @@ public class API {
             System.out.println("path : " + path);
             System.out.println("searchquery : "+ searchquery);
         	
-        	String urlString = "https://swapi.tech/api/" + path + "/";
+        	String urlString = "https://swapi.dev/api/" + path + "/";
             if (searchquery != null && !searchquery.isEmpty()) {
                 urlString += "?search=" + searchquery;
             }
@@ -25,6 +25,7 @@ public class API {
             System.out.println("class API (URL): " + conn);
             System.out.println("URI: " + uri);
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
             conn.connect();
             
 
@@ -49,8 +50,29 @@ public class API {
         return null;
     }
 
+    
     public JSONObject innerRequest(String uri) {
         // Implémentez ceci si vous devez envoyer des requêtes internes
+        // AJOUT HERE
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URI(uri).toURL().openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.connect();
+
+            Scanner scanner = new Scanner(conn.getInputStream());
+            StringBuilder responseBuilder = new StringBuilder();
+            while (scanner.hasNext()) {
+                responseBuilder.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            return new JSONObject(responseBuilder.toString());
+        } catch (Exception e) {
+            e.printStackTrace
+        }
+        //FIN AJOUT HERE
+
         return null;
     }
 }
