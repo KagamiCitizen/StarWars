@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class API {
 
     // URL de base de l'API pour les planètes
-    private static final String PLANETS_API_URL = "https://swapi.dev/api/planets/";
+    private static final String PLANETS_API_URL = "https://swapi.tech/api/planets/";
 
     
     public JSONObject getPlanets(String searchquery) {

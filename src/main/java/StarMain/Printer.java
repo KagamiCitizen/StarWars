@@ -11,35 +11,35 @@ public class Printer {
     public void printDetailsFilms(JSONArray results) {
         for (int i = 0; i < results.length(); i++) {
             JSONObject film = results.getJSONObject(i);
-            System.out.println("Title : " + film.getString("title"));
-            System.out.println("Episode number : " + film.getInt("episode_id"));
-            System.out.println("Opening crawl : " + film.getString("opening_crawl"));
-            System.out.println("Director : " + film.getString("director"));
-            System.out.println("Producer : " + film.getString("producer"));
-            System.out.println("Release Date : " + film.getString("release_date"));
+            System.out.println("Title : " + film.getJSONObject("properties").getString("title"));
+            System.out.println("Episode number : " + film.getJSONObject("properties").getInt("episode_id"));
+            System.out.println("Opening crawl : " + film.getJSONObject("properties").getString("opening_crawl"));
+            System.out.println("Director : " + film.getJSONObject("properties").getString("director"));
+            System.out.println("Producer : " + film.getJSONObject("properties").getString("producer"));
+            System.out.println("Release Date : " + film.getJSONObject("properties").getString("release_date"));
             
             // les personnages (characters)
-            JSONArray characters = film.getJSONArray("characters");
-            System.out.println("\nCharacters :");
+            JSONArray characters = film.getJSONObject("properties").getJSONArray("characters");
+            System.out.println("\nCharacters :");            
             printArrayValues(characters, "name");
 
             // les planètes
-            JSONArray planets = film.getJSONArray("planets");
+            JSONArray planets = film.getJSONObject("properties").getJSONArray("planets");
             System.out.println("\nPlanets :");
             printArrayValues(planets, "name");
 
             // Les vaisseaux
-            JSONArray starships = film.getJSONArray("starships");
+            JSONArray starships = film.getJSONObject("properties").getJSONArray("starships");
             System.out.println("\nStarships :");
             printArrayValues(starships, "name");
 
             // les véhicules
-            JSONArray vehicles = film.getJSONArray("vehicles");
+            JSONArray vehicles = film.getJSONObject("properties").getJSONArray("vehicles");
             System.out.println("\nVehicles :");
             printArrayValues(vehicles, "name");
 
             // les espèces
-            JSONArray species = film.getJSONArray("species");
+            JSONArray species = film.getJSONObject("properties").getJSONArray("species");
             System.out.println("\nSpecies :");
             printArrayValues(species, "name");
 
@@ -106,19 +106,13 @@ public class Printer {
     private void printArrayValues(JSONArray jsonArray, String key) {
         for (int j = 0; j < jsonArray.length(); j++) {
             String value = jsonArray.getString(j);
-            System.out.println(value);
-            // System.out.println("jsonArray : " + jsonArray);
-
-            
-            /*
-            String test = value.getString("director");
-            System.out.println("ICIIIIIII" + test);
-            */
+            // DEBUT MODIFICATION
+            String name = api.getLabelFromUrl(value);
+            System.out.println(" - " + name);
+            // FIN MODIFICATION
         }
         if (jsonArray.length() == 0) {
             System.out.println("No results");
         }
     }
-    
-    
 }
