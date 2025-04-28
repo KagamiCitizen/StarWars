@@ -20,7 +20,7 @@ public class Printer {
             
             // les personnages (characters)
             JSONArray characters = film.getJSONObject("properties").getJSONArray("characters");
-            System.out.println("\nCharacters :");
+            System.out.println("\nCharacters :");            
             printArrayValues(characters, "name");
 
             // les planètes
@@ -106,7 +106,10 @@ public class Printer {
     private void printArrayValues(JSONArray jsonArray, String key) {
         for (int j = 0; j < jsonArray.length(); j++) {
             String value = jsonArray.getString(j);
-            System.out.println(value);
+            // DEBUT MODIFICATION
+            String name = api.getLabelFromUrl(value);
+            System.out.println(" - " + name);
+            // FIN MODIFICATION
         }
         if (jsonArray.length() == 0) {
             System.out.println("No results");
